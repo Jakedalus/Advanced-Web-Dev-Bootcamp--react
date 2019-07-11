@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import Recipe from './Recipe';
-
+import './RecipeList.css';
 
 class RecipeList extends Component {
 	render() {
 		return (
-			<Recipe 
-		        title="pasta" 
-		        ingredients={['flour', 'water']}
-		        instructions="Mix ingredients"
-		        img="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/homemade-spaghetti-sauce-horizontal-1530890913.jpg"
-		    />
-		)
+			<div className="recipe-list">
+				{this.props.recipes.map((r, i) => (
+					<Recipe 
+						key={i}
+				        title={r.title} 
+				        ingredients={r.ingredients}
+				        instructions={r.instructions}
+				        img={r.img}
+				    />
+				))	}
+			</div>
+		);
 	}
 }
 
