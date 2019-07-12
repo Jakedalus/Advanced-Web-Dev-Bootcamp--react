@@ -1,26 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      instructors: [
+        {
+          name: 'Tim',
+          hobbies: ['sailing', 'react']
+        }, {
+          name: 'Matt',
+          hobbies: ['math', 'd3']
+        }, {
+          name: 'Colt',
+          hobbies: ['css', 'hiking']
+        }, {
+          name: 'Elie',
+          hobbies: ['music', 'es2015']
+        }
+      ]
+    };
+
+    setTimeout(() => {
+
+      const randomInstructor = {...this.state.instructors[Math.floor(Math.random() * this.state.instructors.length)]};
+      const newHobbies = {
+        ...randomInstructor,
+        hobbies: randomInstructor.hobbies.splice(Math.floor(Math.random() * randomInstructor.hobbies.length), 1)
+      };
+
+      console.log(randomInstructor);
+      console.log(newHobbies);
+
+      this.setState({
+        ...this.state.instructors,
+        randomInstructor
+      });
+
+    }, 1000);
+  }
+  render() {
+    const instructors = this.state.instructors.map((instructor, index) => (
+      <li key={index}>
+        <h3>{instructor.name}</h3>
+        <h4>Hobbies: {instructor.hobbies.join(", ")}</h4>
+      </li>
+    ));
+    return (
+      <div className="App">
+        <ul>
+          {instructors}
+        </ul>
+      </div>
+    );
+  }
 }
 
 export default App;
