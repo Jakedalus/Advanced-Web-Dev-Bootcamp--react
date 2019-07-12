@@ -24,19 +24,41 @@ class App extends Component {
 
     setTimeout(() => {
 
-      const randomInstructor = {...this.state.instructors[Math.floor(Math.random() * this.state.instructors.length)]};
-      const newHobbies = {
-        ...randomInstructor,
-        hobbies: randomInstructor.hobbies.splice(Math.floor(Math.random() * randomInstructor.hobbies.length), 1)
-      };
+      // MY SOLUTION
+      // const randomInstructor = {...this.state.instructors[Math.floor(Math.random() * this.state.instructors.length)]};
+      // const newHobbies = {
+      //   ...randomInstructor,
+      //   hobbies: randomInstructor.hobbies.splice(Math.floor(Math.random() * randomInstructor.hobbies.length), 1)
+      // };
 
-      console.log(randomInstructor);
-      console.log(newHobbies);
+      // console.log(randomInstructor);
+      // console.log(newHobbies);
 
-      this.setState({
-        ...this.state.instructors,
-        randomInstructor
+      // this.setState({
+      //   ...this.state.instructors,
+      //   randomInstructor
+      // });
+
+
+      // VIDEO SOLUTION
+      const randomInstructorIdx = Math.floor(Math.random() * this.state.instructors.length);
+      const randomHobbyIndx = Math.floor(Math.random() * this.state.instructors[randomInstructorIdx].hobbies.length);
+
+      // console.log(randomInstructorIdx, randomHobbyIndx);
+      const instructors = this.state.instructors.map((inst, i ) => {
+        if (i === randomInstructorIdx) {
+          const hobbies = inst.hobbies.slice();
+          hobbies.splice(randomHobbyIndx, 1);
+          return {
+            ...inst,
+            hobbies
+          };
+        }
+
+        return inst;
       });
+
+      this.setState({instructors});
 
     }, 1000);
   }
