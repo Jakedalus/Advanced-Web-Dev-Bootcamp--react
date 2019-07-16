@@ -1,31 +1,21 @@
 import React, { Component } from 'react';
 import './App.css';
 
-const Box = props => {
-
-  console.log(props);
-  return (
-
-  <div className="box" style={{backgroundColor: props.box}}>
-  </div>
-
-)};
+const Box = ({box}) => (
+    <div className="box" style={{backgroundColor: box}}>
+    </div>
+);
 
 class App extends Component {
   
   constructor(props) {
     super(props);
 
-    const initializeBoxes = () => {
-      const b = [];
-      for (let i = 0; i < 32; i++) {
-        b.push(this.props.allColors[Math.floor(Math.random() * 32)]);
-      }
 
-      return b;
-    };
-
-    const boxes = initializeBoxes();
+    const boxes = [];
+    for (let i = 0; i < 32; i++) {
+      boxes.push(this.props.allColors[Math.floor(Math.random() * 32)]);
+    }
 
     console.log(boxes);
 
@@ -34,10 +24,10 @@ class App extends Component {
     };
 
     setInterval(() => {
-      const clonedArray = JSON.parse(JSON.stringify(this.state.boxes));
+      const clonedArray = this.state.boxes.slice();
       clonedArray[Math.floor(Math.random() * 32)] = this.props.allColors[Math.floor(Math.random() * 32)];
       this.setState({boxes: clonedArray});
-    }, 1000);
+    }, 300);
   }
 
   
@@ -46,8 +36,8 @@ class App extends Component {
 
     return (
       <div className="App">
-        {this.state.boxes.map(box => (
-          <Box box={box}/>
+        {this.state.boxes.map((box, i) => (
+          <Box key={i} box={box}/>
         ))}
       </div>
     );
