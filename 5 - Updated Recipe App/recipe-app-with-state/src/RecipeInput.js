@@ -51,6 +51,7 @@ class RecipeInput extends Component {
 
   render() {
     const {title, instructions, ingredients, img} = this.state;
+    const {onClose} = this.props;
     let inputs = ingredients.map((ingredient, i) => (
       <div 
         className="recipe-form-line" 
@@ -78,7 +79,7 @@ class RecipeInput extends Component {
           <button
             type="button"
             className="close-button"
-            // onClick={onClose}
+            onClick={onClose}
           >
             X
           </button>

@@ -46,7 +46,8 @@ class RecipeApp extends Component {
           instructions: "Mix ingredients",
           img: "https://www.inspiredtaste.net/wp-content/uploads/2018/10/Homemade-Vegetable-Soup-Recipe-2-1200.jpg"
       }],
-      nextRecipeId: 3
+      nextRecipeId: 3,
+      showForm: false
     };
 
     this.handleSave = this.handleSave.bind(this);
@@ -57,16 +58,25 @@ class RecipeApp extends Component {
       const newRecipe = {...recipe, id: this.state.nextRecipeId};
       return {
         nextRecipeId: prevState.nextRecipeId + 1,
-        recipes: [...prevState.recipes, newRecipe]
+        recipes: [...prevState.recipes, newRecipe],
+        showForm: false
       }
     });
   }
 
+
+
   render() {
     return (
       <div className="App">
-        <Header />
-        <RecipeInput onSave={this.handleSave}/>
+        <Header onNewRecipe={() => this.setState({showForm: true})}/>
+        {
+          this.state.showForm && 
+            <RecipeInput 
+              onSave={this.handleSave} 
+              onClose={() => this.setState({showForm: false})} 
+            />
+        }
         <RecipeList recipes={this.state.recipes} />
       </div>
     );
