@@ -7,7 +7,7 @@ class RecipeList extends Component {
 		return (
 			<div className="recipe-list">
 				{this.props.recipes.map((r, i) => (
-					<Recipe key={r.id} {...r} />
+					<Recipe key={r.id} {...r} onDelete={this.props.onDelete} />
 				))	}
 			</div>
 		);
