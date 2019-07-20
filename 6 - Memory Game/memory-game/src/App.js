@@ -18,6 +18,7 @@ class App extends Component {
     };
 
     this.handleClick = this.handleClick.bind(this);
+    this.newGame = this.newGame.bind(this);
     
   }
 
@@ -100,16 +101,21 @@ class App extends Component {
       }, 500);
       
     }
+  }
 
-    
+  newGame() {
+    console.log('NEW GAME!!');
+    const cards = this.initializeCards();
 
-    
+    console.log(cards);
+
+    this.setState({cards});
   }
 
   render() {
     return (
       <div className="App">
-        <Header initializeCards={this.initializeCards}/>
+        <Header newGame={this.newGame}/>
         <MemoryGameBoard cards={this.state.cards} handleClick={this.handleClick}/>
       </div>
     );

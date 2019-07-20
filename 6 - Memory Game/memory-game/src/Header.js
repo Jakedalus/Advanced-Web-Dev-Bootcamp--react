@@ -8,7 +8,7 @@ class Header extends Component {
     return (
       <div className="header">
         <h1>Memory Game</h1>
-        <button onClick={this.props.initializeCards}>New Game</button>
+        <button onClick={this.props.newGame}>New Game</button>
       </div>
     );
   }
