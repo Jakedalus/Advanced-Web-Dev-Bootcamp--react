@@ -16,6 +16,8 @@ class App extends Component {
     this.state = {
       cards
     };
+
+    this.handleClick = this.handleClick.bind(this);
     
   }
 
@@ -49,6 +51,7 @@ class App extends Component {
 
       cardInfo.color = randomColor;
       cardInfo.matched = false;
+      cardInfo.checking = false;
     
       cards.push(cardInfo);
     }
@@ -60,11 +63,54 @@ class App extends Component {
 
   }
 
+  handleClick(card) {
+    console.log(card);
+    const newCards = JSON.parse(JSON.stringify(this.state.cards));
+
+    const cardsBeingChecked = newCards.filter(card => card.checking === true);
+
+    console.log('cardsBeingChecked', cardsBeingChecked);
+
+    if (cardsBeingChecked.length <= 1) {
+      newCards.splice(card.index, 1, {checking: true, matched: card.matched, color: card.color});
+
+
+      console.log('newCards', newCards);
+      this.setState({cards: newCards});
+    } 
+
+    if (cardsBeingChecked.length === 1){
+      const clearedCards = newCards.map(card => ({checking: false, matched: card.matched, color: card.color}));
+
+      
+
+      if (cardsBeingChecked[0].color === card.color) {
+        console.log("MATCHED!!!", card, cardsBeingChecked[0]);
+        const color = card.color;
+        for (let i = 0; i < clearedCards.length; i++) {
+          if (clearedCards[i].color === color) {
+            clearedCards[i].matched = true;
+          }
+        }
+      }
+
+      setTimeout(() => {
+        console.log('clearedCards', clearedCards);
+        this.setState({cards: clearedCards});
+      }, 500);
+      
+    }
+
+    
+
+    
+  }
+
   render() {
     return (
       <div className="App">
         <Header initializeCards={this.initializeCards}/>
-        <MemoryGameBoard cards={this.state.cards}/>
+        <MemoryGameBoard cards={this.state.cards} handleClick={this.handleClick}/>
       </div>
     );
   }

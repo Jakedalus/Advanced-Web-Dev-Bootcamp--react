@@ -10,12 +10,16 @@ class MemoryGameBoard extends Component {
 
   }
 
+
+
   render() {
     console.log(this.props);
     return (
-      <div className="gameboard">
+      <div 
+        className="gameboard"
+      >
         {
-          this.props.cards.map((card, i) => <Card key={i} card={card} />)
+          this.props.cards.map((card, i) => <Card key={i} card={{index: i, ...card}} handleClick={this.props.handleClick}/>)
         }
       </div>
     );
