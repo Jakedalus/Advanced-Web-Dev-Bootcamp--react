@@ -1,10 +1,11 @@
 import React from 'react';
 import './Card.css';
 
-const Card = ({color}) => (
+const Card = ({card}) => (
   <div 
     className="card"
-    style={{backgroundColor: color}}>
+    style={ card.matched ? {backgroundColor: card.color} : {backgroundColor: '#546e7a'}}>
+    
   </div>
 );
 
