@@ -65,34 +65,38 @@ class App extends Component {
   }
 
   handleClick(card) {
-    console.log(card);
+    console.log("CLICK!!!", card);
+
+    if (card.matched) return;
+
     const newCards = JSON.parse(JSON.stringify(this.state.cards));
 
     const cardsBeingChecked = newCards.filter(card => card.checking === true);
 
     console.log('cardsBeingChecked', cardsBeingChecked);
 
-    if (cardsBeingChecked.length <= 1) {
-      newCards.splice(card.index, 1, {checking: true, matched: card.matched, color: card.color});
-
-
-      console.log('newCards', newCards);
-      this.setState({cards: newCards});
-    } 
+    
 
     if (cardsBeingChecked.length === 1){
+
+      const idOfPrevCard = newCards.findIndex(card => card.checking === true);
+
+      console.log('idOfPrevCard', idOfPrevCard);
+
+      if(idOfPrevCard === card.index) return;
+
       const clearedCards = newCards.map(card => ({checking: false, matched: card.matched, color: card.color}));
 
-      
-
-      if (cardsBeingChecked[0].color === card.color) {
-        console.log("MATCHED!!!", card, cardsBeingChecked[0]);
+      if (newCards[idOfPrevCard].color === card.color) {
+        console.log("MATCHED!!!", newCards[idOfPrevCard], card);
         const color = card.color;
         for (let i = 0; i < clearedCards.length; i++) {
           if (clearedCards[i].color === color) {
             clearedCards[i].matched = true;
           }
         }
+        this.setState({cards: clearedCards});
+        return;
       }
 
       setTimeout(() => {
@@ -101,6 +105,14 @@ class App extends Component {
       }, 500);
       
     }
+
+    if (cardsBeingChecked.length <= 1) {
+      newCards.splice(card.index, 1, {checking: true, matched: card.matched, color: card.color});
+
+
+      console.log('newCards', newCards);
+      this.setState({cards: newCards});
+    } 
   }
 
   newGame() {
