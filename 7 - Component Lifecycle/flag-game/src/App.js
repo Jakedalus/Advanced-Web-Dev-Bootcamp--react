@@ -25,25 +25,36 @@ class App extends Component {
     .then(countries => {
       console.log(countries);
       this.setState({countries}, () => {
-        const currentCountry = this.randomCountry();
-        console.log(currentCountry);
-        this.setState({currentCountry});
+        this.newQuestion();
       })
     });
   }
 
-  randomCountry() {
-    return _.sample(this.state.countries);
-  }
+  newQuestion() {
+    const currentCountry = _.sample(this.state.countries);
 
+    const multipleChoices = [];
+
+    for (let i = 0; i < 3; i++) {
+      multipleChoices.push(_.sample(this.state.countries).name);
+    }
+
+    multipleChoices.push(currentCountry.name);
+
+    this.setState({currentCountry, multipleChoices});
+  }
 
   render() {
 
     return (
       <div className="App">
-        <Header />
-        
-        <img className="flag" src={this.state.currentCountry.flag} />
+        <Header /> 
+        <div>
+          <ul>
+            {this.state.multipleChoices.map(choice => (<li className="choice">{choice}</li>))}
+          </ul>
+          <img className="flag" src={this.state.currentCountry.flag} />
+        </div>
       </div>
     );
   }

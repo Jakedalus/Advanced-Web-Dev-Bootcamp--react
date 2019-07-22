@@ -4,5 +4,22 @@
 
 .flag {
   height: 300px;
-  margin-top: 50px;
+  margin-top: 20px;
+}
+
+ul {
+  display: flex;
+  justify-content: space-around;
+  width: 50%;
+  margin: 30px auto;
+  padding: 0;
+}
+
+.choice {
+  list-style: none;
+  padding: 5px 15px;
+  background-color: teal;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
 }
