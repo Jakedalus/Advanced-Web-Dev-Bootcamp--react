@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
+import Header from './Header';
 import './App.css';
 
 class App extends Component {
@@ -8,7 +10,8 @@ class App extends Component {
 
     this.state = {
       countries: [''],
-      currentFlag: '',
+      currentCountry: '',
+      multipleChoices: [],
       correct: 0,
       incorrect: 0
     };
@@ -21,15 +24,26 @@ class App extends Component {
     .then(res => res.json())
     .then(countries => {
       console.log(countries);
-      this.setState({countries})
+      this.setState({countries}, () => {
+        const currentCountry = this.randomCountry();
+        console.log(currentCountry);
+        this.setState({currentCountry});
+      })
     });
+  }
+
+  randomCountry() {
+    return _.sample(this.state.countries);
   }
 
 
   render() {
+
     return (
       <div className="App">
-
+        <Header />
+        
+        <img className="flag" src={this.state.currentCountry.flag} />
       </div>
     );
   }
