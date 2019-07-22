@@ -1,0 +1,13 @@
+.header {
+  background-image: url(./images/map.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  margin: 0;
+  padding: 20px;
+  color: white;
+}
+
+.header h1 {
+  text-shadow: 2px 2px black;
+}
