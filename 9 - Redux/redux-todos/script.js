@@ -14,12 +14,14 @@ function rootReducer(state=initialState, action) {
       newState.id++;
       return {
         ...newState,
-        todos: [...newState.todos, {task: action.task, id: newState.id}]
+        todos: [...newState.todos, {task: action.task, id: newState.id, completed: false}]
       };
-
+    case 'UPDATE_TODO':
+      let updatedTotos = state.todos.map(todo => todo.id === +action.id ? ({...todo, completed: action.completed}) : todo)
+      return {...state, todos: updatedTotos};
     case 'REMOVE_TODO':
-      let todos = state.todos.filter(todo => todo.id !== +action.id);
-      return {...state, todos};
+      let newTodos = state.todos.filter(todo => todo.id !== +action.id);
+      return {...state, todos: newTodos};
     default: 
       return state;
   }
@@ -32,6 +34,8 @@ console.log(store.getState());
 
 $(document).ready(function() {
 
+  console.log('document ready');
+
   $('ul').on('click', 'button', function(e) {
     store.dispatch({
       type: 'REMOVE_TODO',
@@ -41,7 +45,29 @@ $(document).ready(function() {
     $(event.target).parent().remove();
   });
 
-  console.log('document ready');
+  $('ul').on('click', 'li', function(e) {
+    console.log('clicked', e.target, e.target.tagName);
+    if (e.target.tagName !== 'BUTTON') {
+      let currentState = store.getState();
+      let id = $(e.target).attr('data-id');
+      let completed = currentState.todos.find(todo => todo.id === +id).completed;
+
+      console.log('Updating todo', id, currentState.todos.find(todo => todo.id === +id));
+
+      store.dispatch({
+        type: 'UPDATE_TODO',
+        id,
+        completed: !completed
+      });
+
+      const style = !completed ? {'text-decoration': 'line-through'} : {'text-decoration': 'none'};
+
+      $(event.target).css(style);
+    }
+
+  });
+
+  
 
   $('form').on('submit', function(e) {
     e.preventDefault();
@@ -55,7 +81,8 @@ $(document).ready(function() {
     let currentState = store.getState();
 
     let newLi = $('<li>', {
-      text: newTask
+      text: newTask, 
+      'data-id': currentState.id
     });
 
     let newButton = $('<button>', {
