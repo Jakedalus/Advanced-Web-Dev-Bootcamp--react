@@ -28,7 +28,8 @@ function rootReducer(state=initialState, action) {
 
 }
 
-const store = Redux.createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = Redux.createStore(rootReducer, 
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 console.log(store.getState());
 
