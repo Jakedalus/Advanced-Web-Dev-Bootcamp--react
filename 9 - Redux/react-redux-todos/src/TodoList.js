@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import Todo from './Todo';
+import { connect } from 'react-redux';
 
-export default class TodoList extends Component {
+class TodoList extends Component {
   
   constructor(props) {
     super(props);
-
-    this.state = {
-      todos: ['Eat', 'Sleep']
-    };
   }
 
   render() {
@@ -20,3 +17,5 @@ export default class TodoList extends Component {
   }
 
 }
+
+export default connect()(TodoList);
