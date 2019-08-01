@@ -35,6 +35,15 @@ class TodoList extends Component {
     });
   } 
 
+  updateTodo(id, updates) {
+    console.log('Updating todo...');
+    this.props.dispatch({
+      type: "UPDATE_TODO", 
+      id,
+      updates
+    });
+  }
+
   render() {
     return (
       <div>
@@ -53,7 +62,9 @@ class TodoList extends Component {
           { this.props.todos.map((todo,idx) => 
             <Todo 
               removeTodo={this.removeTodo.bind(this, todo.id)} 
+              updateTodo={this.updateTodo.bind(this, todo.id)}
               task={todo.task} 
+              completed={todo.completed}
               key={idx} 
               />
           )}
