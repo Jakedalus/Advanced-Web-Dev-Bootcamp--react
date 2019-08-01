@@ -6,6 +6,7 @@ const initialState = {
 };
 
 export default function rootReducer(state = initialState, action) {
+  console.log('state:', state, 'action:', action);
   const newState = {...state};
 
   switch(action.type) {

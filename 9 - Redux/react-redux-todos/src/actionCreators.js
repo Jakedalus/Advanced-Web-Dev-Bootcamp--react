@@ -17,10 +17,11 @@ export function removeTodo(id) {
 }
 
 export function updateTodo(id, updates) {
+  console.log("update action", id, updates);
   return {
-    type: REMOVE_TODO,
+    type: UPDATE_TODO,
     id,
-    ...updates
+    updates
   }
 }
 
