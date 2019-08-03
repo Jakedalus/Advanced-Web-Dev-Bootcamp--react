@@ -5,7 +5,8 @@ mongoose.set('debug', true);
 mongoose.Promise = Promise;
 
 const todoSchema = new mongoose.Schema({
-  task: String
+  task: String,
+  completed: Boolean
 });
 
 const Todo = mongoose.model('Todo', todoSchema);

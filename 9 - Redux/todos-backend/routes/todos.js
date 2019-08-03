@@ -15,6 +15,13 @@ router.post('/', function(req, res, next) {
     .catch(err => next(err));
 });
 
+router.put('/:id', function(req, res, next) {
+  console.log('put update route:', req.params, req.body);
+  Todo.findByIdAndUpdate(req.params.id, req.body)
+    .then(todo => res.send(todo))
+    .catch(err => next(err));
+});
+
 router.delete('/:id', function(req, res, next) {
   Todo.findByIdAndRemove(req.params.id)
     .then(todo => res.send(todo))
