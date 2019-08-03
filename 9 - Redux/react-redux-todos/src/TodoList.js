@@ -3,7 +3,7 @@ import Todo from './Todo';
 import NewTodoForm from "./NewTodoForm";
 import { connect } from 'react-redux';
 import { ADD_TODO, REMOVE_TODO, UPDATE_TODO } from './actionCreators';
-import { addTodo, removeTodo, updateTodo } from './actionCreators';
+import { addTodo, removeTodo, updateTodo, getTodos } from './actionCreators';
 import { Route } from "react-router-dom";
 
 class TodoList extends Component {
@@ -13,6 +13,10 @@ class TodoList extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
 
+  }
+
+  componentDidMount() {
+    this.props.getTodos();
   }
 
   handleSubmit(val) {
@@ -31,13 +35,13 @@ class TodoList extends Component {
 
   render() {
 
-    let todos = this.props.todos.map((val, index) => (
+    let todos = this.props.todos.map((val) => (
       <Todo
-        removeTodo={this.removeTodo.bind(this, val.id)}
-        updateTodo={this.updateTodo.bind(this, val.id)}
+        removeTodo={this.removeTodo.bind(this, val._id)}
+        updateTodo={this.updateTodo.bind(this, val._id)}
         task={val.task}
         completed={val.completed}
-        key={index}
+        key={val._id}
       />
     ));
     return (
@@ -63,7 +67,7 @@ function mapStateToProps(reduxState) {
 
 
 
-export default connect(mapStateToProps, { addTodo, removeTodo, updateTodo })(TodoList);
+export default connect(mapStateToProps, { addTodo, removeTodo, updateTodo, getTodos })(TodoList);
 
 
 
